@@ -6,10 +6,11 @@ import path from 'path';
 
 const app = express();
 const httpServer = createServer(app);
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
+const corsOrigin = CLIENT_ORIGIN ? CLIENT_ORIGIN : true; // true reflects request origin
 const io = new Server(httpServer, {
   cors: {
-    origin: CLIENT_ORIGIN,
+    origin: corsOrigin,
     methods: ["GET", "POST"]
   }
 });

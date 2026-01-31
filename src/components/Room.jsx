@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import Cursor from './Cursor';
 import Chat from './Chat';
 
-const SOCKET_URL = 'http://localhost:3001';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001');
 
 export default function Room({ roomId, identity, onLeave }) {
   const [socket, setSocket] = useState(null);
