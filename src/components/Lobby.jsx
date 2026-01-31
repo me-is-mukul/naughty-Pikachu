@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = 'http://localhost:3001';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001');
 
 export default function Lobby({ onJoinRoom, identity }) {
   const [rooms, setRooms] = useState([]);
@@ -11,11 +11,18 @@ export default function Lobby({ onJoinRoom, identity }) {
     const newSocket = io(SOCKET_URL);
     setSocket(newSocket);
 
+    newSocket.on('connect', () => {
+      console.debug('socket connected', newSocket.id, 'to', SOCKET_URL);
+      newSocket.emit('get_rooms');
+    });
+
     newSocket.on('rooms_update', (roomsList) => {
       setRooms(roomsList);
     });
 
-    newSocket.emit('get_rooms');
+    newSocket.on('connect_error', (err) => {
+      console.error('socket connect_error', err);
+    });
 
     return () => newSocket.close();
   }, []);
