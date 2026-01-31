@@ -2,12 +2,14 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
+import path from 'path';
 
 const app = express();
 const httpServer = createServer(app);
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: CLIENT_ORIGIN,
     methods: ["GET", "POST"]
   }
 });
@@ -204,7 +206,22 @@ function ensureMinimumRooms() {
 setInterval(ensureMinimumRooms, 5000);
 ensureMinimumRooms();
 
-const PORT = 3001;
+// Serve built frontend when available (production)
+const distPath = path.resolve(process.cwd(), '..', 'dist');
+try {
+  // If the Vite build exists, serve static files from it
+  // This makes the backend a single deployable image that serves the frontend
+  app.use(express.static(distPath));
+
+  // Serve index.html for SPA routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+} catch (err) {
+  // if dist doesn't exist, continue — frontend can be served separately in dev
+}
+
+const PORT = process.env.PORT || 3001;
 httpServer.listen(PORT, () => {
   console.log(`🕳️  GhostRooms server running on port ${PORT}`);
 });

@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  ghostrooms:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - CLIENT_ORIGIN=http://localhost:3001
+    restart: unless-stopped
