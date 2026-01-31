@@ -15,6 +15,11 @@ const io = new Server(httpServer, {
   }
 });
 
+// Diagnostic: log engine handshake/connect errors
+io.engine.on && io.engine.on('connection_error', (err) => {
+  console.error('Socket engine connection_error:', err);
+});
+
 // In-memory state
 const rooms = new Map();
 const userRooms = new Map();
@@ -69,6 +74,7 @@ function cleanupEmptyRooms() {
 // Socket.IO handling
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
+  console.log('Handshake origin:', socket.handshake?.headers?.origin, 'address:', socket.handshake?.address);
 
   // Send current rooms
   socket.on('get_rooms', () => {
@@ -206,6 +212,11 @@ function ensureMinimumRooms() {
 
 setInterval(ensureMinimumRooms, 5000);
 ensureMinimumRooms();
+
+// Health / diagnostic endpoint
+app.get('/_status', (req, res) => {
+  res.json({ status: 'ok', rooms: rooms.size, origin: req.headers.origin || req.headers.host });
+});
 
 // Serve built frontend when available (production)
 const distPath = path.resolve(process.cwd(), '..', 'dist');
