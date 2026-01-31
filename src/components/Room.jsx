@@ -73,14 +73,14 @@ export default function Room({ roomId, identity, onLeave }) {
     <div 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="w-full h-full relative bg-black cursor-none"
+      className="w-full h-full relative bg-black cursor-default"
     >
       {/* Exit Button */}
       <button
         onClick={onLeave}
         className="absolute top-4 left-4 z-50 px-3 py-1.5 text-xs text-zinc-500 
                    hover:text-zinc-300 border border-zinc-800 rounded-md
-                   hover:border-zinc-700 transition-all cursor-pointer"
+                   hover:border-zinc-700 transition-all cursor-pointer btn-ghost"
       >
         ← lobby
       </button>
@@ -117,7 +117,7 @@ export default function Room({ roomId, identity, onLeave }) {
       {/* Subtle Center Text (only shows when quiet) */}
       {messages.length === 0 && Object.keys(cursors).length === 0 && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="text-zinc-800 text-sm animate-pulse">
+          <div className="text-zinc-700 text-sm animate-pulse">
             move your cursor
           </div>
         </div>

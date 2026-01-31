@@ -43,12 +43,18 @@ function App() {
   }
 
   return (
-    <div className="w-screen h-screen bg-black overflow-hidden">
-      {currentView === 'lobby' ? (
-        <Lobby onJoinRoom={joinRoom} identity={identity} />
-      ) : (
-        <Room roomId={currentRoom} identity={identity} onLeave={leaveRoom} />
-      )}
+    <div className="w-screen h-screen overflow-hidden relative">
+      {/* Background layer (keeps visual background behind UI) */}
+      <div className="absolute inset-0 -z-10" aria-hidden />
+
+      {/* Main UI content */}
+      <div className="w-full h-full relative z-10">
+        {currentView === 'lobby' ? (
+          <Lobby onJoinRoom={joinRoom} identity={identity} />
+        ) : (
+          <Room roomId={currentRoom} identity={identity} onLeave={leaveRoom} />
+        )}
+      </div>
     </div>
   );
 }

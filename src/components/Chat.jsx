@@ -41,27 +41,27 @@ export default function Chat({ messages, onSendMessage, identity }) {
         <form onSubmit={handleSubmit} className="relative">
           <input
             type="text"
+            aria-label="Chat message"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder={isFocused ? '' : 'type to speak...'}
-            className="w-full bg-black/80 border border-zinc-800 rounded-lg px-4 py-3 
-                     text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-700
+            className="w-full frost-input border rounded-lg px-4 py-3 
+                     text-white placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-zinc-600
                      transition-all cursor-text text-sm backdrop-blur-sm"
             maxLength={200}
           />
-          
-          {input && (
-            <button
-              type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 
-                       bg-zinc-800 hover:bg-zinc-700 rounded text-xs text-zinc-300
-                       transition-all cursor-pointer"
-            >
-              send
-            </button>
-          )}
+
+          <button
+            type="submit"
+            aria-label="Send message"
+            disabled={!input.trim()}
+            className={`absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded text-xs transition-all 
+                       ${input.trim() ? 'bg-zinc-800 hover:bg-zinc-700 text-zinc-300 cursor-pointer' : 'bg-zinc-900 text-zinc-600 cursor-not-allowed'}`}
+          >
+            send
+          </button>
         </form>
       </div>
     </div>

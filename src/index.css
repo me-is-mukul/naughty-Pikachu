@@ -14,9 +14,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: black;
+  background: radial-gradient(ellipse at center, #050508 0%, #000000 60%);
   color: white;
   overflow: hidden;
+}
+
+/* Ensure native cursor remains visible across the app (override accidental hides) */
+html, body, #root, .app-root {
+  cursor: default !important;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -42,4 +47,48 @@ input, button {
 ::selection {
   background: rgba(255, 255, 255, 0.1);
   color: white;
+}
+
+/* Glass card style */
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+}
+
+/* Small utility for subtle elevation */
+.card-shadow {
+  box-shadow: 0 8px 30px rgba(2,2,2,0.6), 0 1px 0 rgba(255,255,255,0.02) inset;
+}
+
+/* Fade-in animation used by cursor label and messages */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in-up 220ms ease-out both;
+}
+
+/* Make small inputs look slightly frosted */
+.frost-input {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Improve small buttons */
+.btn-ghost {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.85);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* Responsive layout helpers */
+.center-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }

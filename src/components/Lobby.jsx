@@ -47,7 +47,7 @@ export default function Lobby({ onJoinRoom, identity }) {
       </div>
 
       {/* Identity Display */}
-      <div className="mb-8 flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/50 border border-zinc-800">
+      <div className="mb-8 flex items-center gap-3 px-4 py-2 rounded-full glass card-shadow">
         <div 
           className="w-6 h-6 rounded-full" 
           style={{ backgroundColor: identity.color }}
@@ -91,7 +91,7 @@ function RoomCard({ room, onJoin }) {
       onMouseLeave={() => setIsHovered(false)}
       className="relative group bg-zinc-900/30 border border-zinc-800 rounded-lg p-6 
                  hover:bg-zinc-900/50 hover:border-zinc-700 transition-all duration-300
-                 cursor-pointer text-left"
+                 cursor-pointer text-left transform hover:scale-105 hover:shadow-lg"
     >
       {/* Activity Pulse */}
       {room.activity > 0.5 && (
