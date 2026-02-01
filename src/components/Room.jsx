@@ -39,11 +39,6 @@ export default function Room({ roomId, identity, onLeave }) {
     // Listen for messages
     newSocket.on('message', (message) => {
       setMessages(prev => [...prev, message]);
-      
-      // Auto-fade messages after 90 seconds
-      setTimeout(() => {
-        setMessages(prev => prev.filter(m => m.id !== message.id));
-      }, 90000);
     });
 
     return () => newSocket.close();

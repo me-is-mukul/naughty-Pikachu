@@ -72,23 +72,17 @@ function Message({ message, isOwn, index }) {
   const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
-    // Fade in
+    // Fade in on mount
     const timer = setTimeout(() => setOpacity(1), 50);
-    
-    // Start fading out after 60 seconds
-    const fadeTimer = setTimeout(() => {
-      setOpacity(0.3);
-    }, 60000);
 
     return () => {
       clearTimeout(timer);
-      clearTimeout(fadeTimer);
     };
   }, []);
 
   return (
     <div
-      className="flex items-start gap-2 transition-opacity duration-1000"
+      className={`flex items-start gap-3 transition-opacity duration-300 ${isOwn ? 'justify-end flex-row-reverse' : 'justify-start'}`}
       style={{ 
         opacity,
         animationDelay: `${index * 50}ms`
@@ -102,8 +96,8 @@ function Message({ message, isOwn, index }) {
       />
 
       {/* Message Content */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-baseline gap-2 mb-0.5">
+      <div className={`flex-1 min-w-0 flex flex-col ${isOwn ? 'items-end' : 'items-start'}`}>
+        <div className={`flex items-baseline gap-2 mb-1 ${isOwn ? 'justify-end' : ''}`}>
           <span 
             className="text-xs font-mono"
             style={{ color: message.color }}
@@ -111,12 +105,15 @@ function Message({ message, isOwn, index }) {
             {message.username}
           </span>
           {isOwn && (
-            <span className="text-zinc-700 text-xs">you</span>
+            <span className="text-zinc-400 text-xs">you</span>
           )}
         </div>
-        <p className="text-white text-sm leading-relaxed break-words">
-          {message.text}
-        </p>
+
+        <div className={`inline-block rounded-2xl px-4 py-2 text-sm leading-relaxed break-words max-w-[75%] ${isOwn ? 'bg-indigo-600 text-white' : 'bg-zinc-800/70 text-white'}`}>
+          <p className="whitespace-pre-wrap m-0">
+            {message.text}
+          </p>
+        </div>
       </div>
     </div>
   );
