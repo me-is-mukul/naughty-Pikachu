@@ -25,7 +25,7 @@ export default function Chat({ messages, onSendMessage, identity }) {
     <div className="absolute bottom-0 left-0 right-0 z-30 p-6 pointer-events-none">
       <div className="max-w-2xl mx-auto pointer-events-auto">
         {/* Messages */}
-        <div className="mb-4 space-y-2 max-h-96 overflow-y-auto scrollbar-hide">
+        <div className="mb-4 space-y-2 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hide">
           {messages.map((msg, idx) => (
             <Message 
               key={msg.id} 
