@@ -2,7 +2,7 @@
 ![Version](https://img.shields.io/badge/Version-1.0.0-green)
 # Ghost Chat
 <p align="center">
-  <img src="image.png" width="300" alt="demo"/>
+  <img src="image.png" width="700" alt="demo"/>
 </p>
 
 ## Start server
